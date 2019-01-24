@@ -9,7 +9,7 @@ plugins {
 repositories {
     jcenter() 
 }
-mainClassName = 'filtering.Main'
+mainClassName = 'filtering.HelloWorld'
 
 
 
