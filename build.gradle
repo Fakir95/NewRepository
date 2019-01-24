@@ -1,0 +1,61 @@
+plugins {
+    id 'java'
+    id 'application'
+    id 'pmd'
+    id 'findbugs'
+    id 'checkstyle'
+}
+
+repositories {
+    jcenter() 
+}
+mainClassName = 'filtering.Main'
+
+
+
+//Tests
+dependencies {
+    testCompile "junit:junit:4.11"
+}
+sourceSets {
+    test {
+        java {
+            srcDirs = ["test/"]  // Note @Peter's comment below
+        }
+    }
+}
+
+//FindBugs
+tasks.withType(FindBugs) {
+    reports {
+        xml.enabled false
+        html.enabled true
+    }
+}
+findbugs{
+    ignoreFailures = true
+}
+
+//Checkstyle
+tasks.withType(Checkstyle) {
+    reports {
+        xml.enabled false
+        html.enabled true
+    }
+}
+checkstyle {
+    configFile file("config/checkstyle/checkstyle.xml")
+    toolVersion = '8.16'
+}
+
+//PMD
+tasks.withType(Pmd) {
+    reports {
+        xml.enabled false
+        html.enabled true
+    }
+}
+pmd {
+    ruleSetConfig = rootProject.resources.text.fromFile ("config/pmd/ ruleset.xml")
+    ignoreFailures = true
+}
